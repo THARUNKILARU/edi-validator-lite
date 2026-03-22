@@ -1,67 +1,73 @@
 # EDI Validator Lite
 
-A simple C# console app that validates basic X12 structure for healthcare EDI files.
+A lightweight C# console application for validating the structural integrity of X12 healthcare EDI files. The project focuses on core envelope validation, transaction detection, segment count verification, and basic transaction-specific checks for common healthcare transaction sets.
 
-## Why this project
-This is a strong first GitHub project for a healthcare EDI professional because it shows:
-- X12 file parsing
-- C# console app development
-- validation logic
-- JSON reporting
-- healthcare transaction awareness
+## Overview
+EDI Validator Lite was built as a practical foundation for healthcare EDI validation workflows. It is designed to read raw X12 files, identify the transaction type, validate key structural segments, and produce a clear validation summary. In addition to console output, the project can be extended to support structured JSON reporting for downstream review and automation.
 
-## Supported checks
-### Envelope checks
-- ISA / IEA presence
-- GS / GE presence
-- ST / SE presence
-- ST/SE count match
-- GS/GE count match
+This project reflects real-world healthcare EDI work by focusing on the kinds of structural issues that commonly cause transaction failures, file rejections, or downstream processing problems.
+
+## Objectives
+The primary goals of this project are to:
+
+- parse raw X12 healthcare EDI files
+- validate core interchange, functional group, and transaction set structure
+- identify supported healthcare transaction types
+- perform essential segment count and balancing checks
+- provide readable validation output for technical review
+- create a reusable starting point for more advanced EDI validation tooling
+
+## Supported Transaction Types
+The validator currently supports detection of the following healthcare transaction sets:
+
+- **834** Benefit Enrollment and Maintenance
+- **835** Health Care Claim Payment / Advice
+- **837** Health Care Claim
+
+## Validation Scope
+
+### Envelope Validation
+The application performs the following structural checks:
+
+- ISA / IEA presence validation
+- GS / GE presence validation
+- ST / SE presence validation
+- ST / SE count matching
+- GS / GE count matching
 - GE01 transaction count validation
 - SE01 segment count validation
 
-### Transaction detection
-- 834 Benefit Enrollment
-- 835 Claim Payment/Advice
-- 837 Health Care Claim
+### Transaction Detection
+The application identifies the transaction type from the `ST` segment and maps it to a healthcare transaction description.
 
-### Minimal transaction-specific checks
-- 834: BGN, INS, HD, REF or NM1
-- 835: BPR, TRN, CLP
-- 837: BHT, NM1, CLM/SV1/LX
+### Minimal Transaction-Specific Validation
+Basic transaction-level checks are included to ensure key segments exist for supported transaction types.
 
-## Project structure
-```text
-edi-validator-lite/
-├── edi-validator-lite.csproj
-├── Program.cs
-├── Models/
-│   └── ValidationResult.cs
-├── Services/
-│   ├── X12Parser.cs
-│   └── X12Validator.cs
-├── Samples/
-│   ├── sample-834.edi
-│   └── sample-bad-834.edi
-└── README.md
-```
+#### 834 Benefit Enrollment
+Checks for the presence of:
+- `BGN`
+- `INS`
+- `HD`
+- `REF` or `NM1`
 
-## Example output
-```text
-EDI VALIDATION SUMMARY
-File              : sample-834.edi
-Transaction Type  : 834 Benefit Enrollment
-Segment Count     : 12
-Valid             : True
-Errors            : 0
-Warnings          : 0
-```
+#### 835 Claim Payment / Advice
+Checks for the presence of:
+- `BPR`
+- `TRN`
+- `CLP`
 
-## next upgrades
-- Add 270/271 support
-- Add 999/TA1 validation
-- Validate control numbers
-- Export CSV report
-- Add unit tests
-- Add loop-level business rule validation
-- Make rules config-driven from JSON
+#### 837 Health Care Claim
+Checks for the presence of:
+- `BHT`
+- `NM1`
+- `CLM`, `SV1`, or `LX`
+
+## Key Features
+- Reads X12 EDI files from a local file path
+- Splits raw EDI data into individual segments
+- Detects healthcare transaction type automatically
+- Validates core X12 structural envelopes
+- Verifies segment balancing and control counts
+- Performs minimal transaction-specific checks
+- Produces a clear validation summary in the console
+- Provides a solid base for future JSON, CSV, or database-driven reporting
