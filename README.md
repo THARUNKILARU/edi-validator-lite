@@ -62,7 +62,7 @@ Errors            : 0
 Warnings          : 0
 ```
 
-## Good next upgrades
+## next upgrades
 - Add 270/271 support
 - Add 999/TA1 validation
 - Validate control numbers
@@ -70,6 +70,3 @@ Warnings          : 0
 - Add unit tests
 - Add loop-level business rule validation
 - Make rules config-driven from JSON
-
-## Best GitHub description
-C# healthcare EDI validator for X12 834/835/837 files with basic envelope checks, transaction detection, and JSON validation reports.
