@@ -46,11 +46,6 @@ edi-validator-lite/
 └── README.md
 ```
 
-## Run locally
-```bash
-dotnet run -- Samples/sample-834.edi
-```
-
 ## Example output
 ```text
 EDI VALIDATION SUMMARY
